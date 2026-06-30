@@ -31,10 +31,12 @@ app.post("/api/chat", async (req, res) => {
   }
 
   const claudeMessages = (Array.isArray(history) ? history : [])
-    .slice(-6)
     .filter((m) => m.role === "user" || m.role === "assistant")
     .map((m) => ({ role: m.role, content: m.content }));
   claudeMessages.push({ role: "user", content: message });
+
+  console.log(`[backend] messages array sent to Claude (${claudeMessages.length} turns):`,
+    JSON.stringify(claudeMessages, null, 2));
 
   try {
     const upstream = await fetch("https://api.anthropic.com/v1/messages", {

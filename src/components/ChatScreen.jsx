@@ -26,7 +26,12 @@ export default function ChatScreen({ languagePair, country, onBack }) {
           history: [],
           message: "Hi",
         });
-        setMessages([{ role: "assistant", content: reply }]);
+        // Include the hidden "Hi" turn so Claude always sees a valid
+        // user-first conversation history on subsequent messages.
+        setMessages([
+          { role: "user", content: "Hi", hidden: true },
+          { role: "assistant", content: reply },
+        ]);
       } catch (e) {
         setMessages([{ role: "assistant", content: ERROR_MESSAGE }]);
       }
@@ -42,6 +47,7 @@ export default function ChatScreen({ languagePair, country, onBack }) {
     const priorMessages = messages;
     setMessages((prev) => [...prev, { role: "user", content: userMsg }]);
     setLoading(true);
+    console.log("[chat] sending history:", priorMessages, "| message:", userMsg);
     try {
       const reply = await sendChatMessage({
         languagePair,
@@ -77,7 +83,7 @@ export default function ChatScreen({ languagePair, country, onBack }) {
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-2">
-        {messages.map((msg, i) => (
+        {messages.filter((msg) => !msg.hidden).map((msg, i) => (
           <div
             key={i}
             className={`flex items-end gap-2 ${
