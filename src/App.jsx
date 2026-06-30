@@ -9,8 +9,8 @@ export default function App() {
   const [country, setCountry] = useState(null);
 
   return (
-    <div className="h-svh w-full bg-black">
-      <div className="mx-auto flex h-full max-w-md flex-col">
+    <div className="h-svh w-full bg-black overflow-hidden">
+      <div className="mx-auto flex h-full max-w-md flex-col pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
         {screen === "language" && (
           <LanguageSelectScreen
             onSelect={(pair) => {
