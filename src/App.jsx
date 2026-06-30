@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-const API_URL = "http://localhost:3001/api/chat";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api/chat";
 
 const SYSTEM_PROMPT = `You are "Pierre", a witty, slightly sarcastic French tutor for English speakers learning French. You're like a clever, sharp-tongued friend who's fluent in French — not a textbook, not a generic cheerful app-bot.
 
