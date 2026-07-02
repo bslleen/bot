@@ -8,6 +8,7 @@ import HomeScreen from "./components/HomeScreen";
 import MapScreen from "./components/MapScreen";
 import SkillsScreen from "./components/SkillsScreen";
 import ProfileScreen from "./components/ProfileScreen";
+import DesignPreview from "./components/DesignPreview";
 
 // Persistent shell: safe-area padding + max-width column stay constant across
 // every route. The routed screen gets a bounded flex-1 area so its own
@@ -115,6 +116,9 @@ export default function App() {
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
+          {/* Temporary — design system review page, not part of the real app flow.
+              Delete this route once real screens are built against the ui/ primitives. */}
+          <Route path="/design-preview" element={<DesignPreview />} />
         </Routes>
       </AppStateProvider>
     </BrowserRouter>

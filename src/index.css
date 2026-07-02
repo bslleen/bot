@@ -1,5 +1,50 @@
 @import "tailwindcss";
 
+/*
+ * Design system tokens (Tailwind v4 uses this @theme block instead of
+ * tailwind.config.js — there is no config file in this project, and one
+ * without an explicit `@config` import here would never be loaded). Each
+ * --color-{name}-{shade} token below generates the matching bg, text,
+ * border, ring, and gradient stop utilities automatically.
+ */
+@theme {
+  /* navy/near-black background scale */
+  --color-navy-950: #030509;
+  --color-navy-900: #05070f;
+  --color-navy-800: #0a0f1e;
+  --color-navy-700: #10162b;
+  --color-navy-600: #161d38;
+  --color-navy-500: #1e2749;
+
+  /* purple accent scale (primary) */
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #7c3aed;
+  --color-primary-700: #6d28d9;
+
+  /* green — success / completed states */
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+
+  /* orange — streak / fire */
+  --color-streak-300: #fdba74;
+  --color-streak-400: #fb923c;
+  --color-streak-500: #f97316;
+  --color-streak-600: #ea580c;
+
+  /* red — speaking / error accent */
+  --color-danger-300: #fca5a5;
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+
+  /* custom glass blur strength — generates backdrop-blur-glass (and blur-glass) */
+  --blur-glass: 20px;
+}
+
 * {
   box-sizing: border-box;
 }
