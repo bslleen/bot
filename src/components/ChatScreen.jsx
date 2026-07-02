@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { sendChatMessage } from "../lib/api";
+import { loadHistory, saveHistory } from "../lib/storage";
 
 const ERROR_MESSAGE = "Oops, lost my train of thought. Try again?";
 
@@ -17,6 +18,17 @@ export default function ChatScreen({ languagePair, country, onBack }) {
   useEffect(() => {
     if (greeted.current) return;
     greeted.current = true;
+
+    // Rehydrate from localStorage first — history previously lived only in
+    // this component's state, so a page refresh or navigating back to the
+    // country picker and returning (which unmounts/remounts ChatScreen)
+    // wiped everything, including any name the user had already given.
+    const saved = loadHistory(languagePair, country.name);
+    if (saved && saved.length > 0) {
+      setMessages(saved);
+      return;
+    }
+
     (async () => {
       setLoading(true);
       try {
@@ -39,6 +51,12 @@ export default function ChatScreen({ languagePair, country, onBack }) {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      saveHistory(languagePair, country.name, messages);
+    }
+  }, [messages, languagePair, country.name]);
 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
