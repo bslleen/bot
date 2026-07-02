@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { sendChatMessage } from "../lib/api";
 import { loadHistory, saveHistory } from "../lib/storage";
+import { addXp, recordStreak } from "../lib/gamification";
 
+const XP_PER_EXCHANGE = 10;
 const ERROR_MESSAGE = "Oops, lost my train of thought. Try again?";
 const MAX_TEXTAREA_HEIGHT_PX = 112; // ~4 lines before the textarea scrolls internally
 
@@ -35,6 +37,13 @@ export default function ChatScreen({ languagePair, country, onBack }) {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  // recordStreak() is idempotent within a calendar day, so calling it
+  // unconditionally on every mount is safe even if ChatScreen mounts more
+  // than once in a session (e.g. navigating away and back via the tab bar).
+  useEffect(() => {
+    recordStreak();
+  }, []);
 
   // Auto-resize the textarea to fit content, capped at MAX_TEXTAREA_HEIGHT_PX —
   // beyond that it scrolls internally instead of growing further.
@@ -74,6 +83,7 @@ export default function ChatScreen({ languagePair, country, onBack }) {
           { role: "user", content: "Hi", hidden: true, timestamp: Date.now() },
           { role: "assistant", content: reply, timestamp: Date.now() },
         ]);
+        addXp(XP_PER_EXCHANGE, "chat");
       } catch (e) {
         setMessages([{ role: "assistant", content: ERROR_MESSAGE, timestamp: Date.now() }]);
       }
@@ -104,6 +114,7 @@ export default function ChatScreen({ languagePair, country, onBack }) {
         message: userMsg,
       });
       setMessages((prev) => [...prev, { role: "assistant", content: reply, timestamp: Date.now() }]);
+      addXp(XP_PER_EXCHANGE, "chat");
     } catch (e) {
       setMessages((prev) => [...prev, { role: "assistant", content: ERROR_MESSAGE, timestamp: Date.now() }]);
     }
