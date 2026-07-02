@@ -75,13 +75,6 @@ Everything sensitive stays server-side: the API key exists only in `server/.env`
 
 A full pre-launch audit (July 2026) found and fixed: unbounded message/history sizes (token-cost exposure), wide-open CORS (any site could burn the API key through visitors' browsers), full conversations being written to Railway logs, upstream error bodies leaking the model name to DevTools, a crash-on-malformed-history path that could return a stack trace, and a leftover scratch file containing a hardcoded (unused, now revoked) API key. `npm audit` is clean on both packages. Known accepted gaps for this stage: no auth, in-memory rate limiting, and conversations stored unencrypted in the user's own `localStorage`.
 
-## What's Next
-
-- **Airport onboarding flow** — Amine's vision: you don't pick a country from a grid, you land in it. Arrival-gate framing for the first conversation.
-- **Cross-session memory** — Pierre should remember you across devices and sessions, not just per-browser. Needs auth + a database, which unlocks real per-user rate limiting too.
-- **TTS voice with accent selection** — hear Pierre in the accent of the country you picked; Québécois Pierre and Parisian Pierre should not sound the same.
-- **Payment integration** — free tier stays generous; paying unlocks longer sessions and voice.
-- **TikTok content strategy** — Pierre's roasts are built to be screenshot; lean into it for distribution.
 
 ## Contributing
 
