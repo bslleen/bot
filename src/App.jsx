@@ -4,7 +4,7 @@ import BottomNav from "./components/BottomNav";
 import LanguageSelectScreen from "./components/LanguageSelectScreen";
 import CountrySelectScreen from "./components/CountrySelectScreen";
 import ChatScreen from "./components/ChatScreen";
-import HomeScreen from "./components/HomeScreen";
+import HomeScreen from "./screens/HomeScreen";
 import MapScreen from "./components/MapScreen";
 import SkillsScreen from "./components/SkillsScreen";
 import ProfileScreen from "./components/ProfileScreen";
