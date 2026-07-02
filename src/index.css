@@ -41,3 +41,29 @@ body {
 .animate-bounce-dot {
   animation: bounce-dot 1.2s infinite;
 }
+
+/*
+ * ChatScreen background: a soft indigo glow sitting over a deep navy base.
+ * Two radial layers + a base color in one property — no single Tailwind
+ * utility expresses a multi-stop layered background this way, and an
+ * arbitrary-value class would be less readable than a named rule.
+ */
+.chat-bg {
+  background-color: #0a0f1e;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99, 102, 241, 0.16), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 85% 100%, rgba(139, 92, 246, 0.1), transparent 70%);
+}
+
+/*
+ * Pierre's avatar ring: pulses via box-shadow spread while a response is
+ * loading. Tailwind's built-in animate-pulse only fades opacity — it can't
+ * express a growing colored glow, so this needs its own keyframes.
+ */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.45), 0 0 12px 2px rgba(99, 102, 241, 0.35); }
+  50% { box-shadow: 0 0 0 6px rgba(139, 92, 246, 0), 0 0 20px 6px rgba(99, 102, 241, 0.55); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 1.8s ease-in-out infinite;
+}
